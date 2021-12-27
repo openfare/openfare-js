@@ -1,0 +1,35 @@
+[package]
+name = "openfare-js"
+version = "0.1.0"
+authors = ["rndhouse <rndhouse@protonmail.com>"]
+edition = "2021"
+repository = "https://github.com/openfare/openfare-js"
+license-file = "LICENSE"
+description = "Javascript ecosystem extension for OpenFare."
+
+[lib]
+name = "openfare_js_lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "openfare-js"
+path = "src/bin.rs"
+
+[dependencies]
+openfare-lib = { path = "../openfare/openfare-lib", version = "0.1.0" }
+
+anyhow = "1.0.31"
+structopt = "0.3.14"
+strum = "0.20.0"
+strum_macros = "0.20.1"
+maplit = "1.0.2"
+tempdir = "0.3.7"
+env_logger = "0.8.2"
+log = "0.4.8"
+
+url = "2.1.1"
+reqwest = { version = "0.10.6", features = ["blocking"] }
+
+handlebars = "3.1.0"
+serde = { version = "1.0.104", features = ["derive"] }
+serde_json = "1.0.48"
