@@ -26,15 +26,15 @@ impl openfare_lib::extension::Extension for JsExtension {
         self.registry_host_names_.clone()
     }
 
-    fn package_dependencies_configs(
+    fn package_dependencies_locks(
         &self,
         package_name: &str,
         package_version: &Option<&str>,
         extension_args: &Vec<String>,
     ) -> Result<
-        openfare_lib::extension::commands::package_dependencies_configs::PackageDependenciesConfigs,
+        openfare_lib::extension::commands::package_dependencies_locks::PackageDependenciesLocks,
     > {
-        commands::package_dependencies_configs(
+        commands::package_dependencies_locks(
             &self,
             &package_name,
             &package_version,
@@ -42,11 +42,11 @@ impl openfare_lib::extension::Extension for JsExtension {
         )
     }
 
-    fn fs_defined_dependencies_configs(
+    fn fs_defined_dependencies_locks(
         &self,
         working_directory: &std::path::PathBuf,
         extension_args: &Vec<String>,
-    ) -> Result<openfare_lib::extension::commands::fs_defined_dependencies_configs::FsDefinedDependenciesConfigs>{
-        commands::fs_defined_dependencies_configs(&working_directory, &extension_args)
+    ) -> Result<openfare_lib::extension::commands::fs_defined_dependencies_locks::FsDefinedDependenciesLocks>{
+        commands::fs_defined_dependencies_locks(&working_directory, &extension_args)
     }
 }

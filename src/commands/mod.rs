@@ -1,6 +1,6 @@
 mod common;
-mod fs_defined_dependencies_configs;
-mod package_dependencies_configs;
+mod fs_defined_dependencies_locks;
+mod package_dependencies_locks;
 
-pub use fs_defined_dependencies_configs::fs_defined_dependencies_configs;
-pub use package_dependencies_configs::package_dependencies_configs;
+pub use fs_defined_dependencies_locks::fs_defined_dependencies_locks;
+pub use package_dependencies_locks::package_dependencies_locks;

@@ -1,24 +1,24 @@
 use super::common;
 use anyhow::{format_err, Result};
-use openfare_lib::extension::commands::fs_defined_dependencies_configs::FsDefinedDependenciesConfigs;
+use openfare_lib::extension::commands::fs_defined_dependencies_locks::FsDefinedDependenciesLocks;
 
-pub fn fs_defined_dependencies_configs(
+pub fn fs_defined_dependencies_locks(
     working_directory: &std::path::PathBuf,
     _extension_args: &Vec<String>,
-) -> Result<FsDefinedDependenciesConfigs> {
+) -> Result<FsDefinedDependenciesLocks> {
     // Identify all dependency definition files.
     let dependency_files = match common::identify_dependency_files(&working_directory) {
         Some(v) => v,
         None => {
             log::debug!("Did not identify any dependency definition files.");
-            return Ok(FsDefinedDependenciesConfigs::default());
+            return Ok(FsDefinedDependenciesLocks::default());
         }
     };
     let dependency_file = match dependency_files.first() {
         Some(f) => f,
         None => {
             log::debug!("Did not identify any dependency definition files.");
-            return Ok(FsDefinedDependenciesConfigs::default());
+            return Ok(FsDefinedDependenciesLocks::default());
         }
     };
 
@@ -37,7 +37,7 @@ pub fn fs_defined_dependencies_configs(
         .to_path_buf();
 
     let primary_package = common::npm::get_package(&dependency_file.path)?;
-    let primary_package_config = common::npm::get_config(&project_path)?;
+    let primary_package_lock = common::npm::get_lock(&project_path)?;
 
     let node_modules_directories = common::identify_node_modules_directories(&working_directory)?;
 
@@ -62,19 +62,19 @@ pub fn fs_defined_dependencies_configs(
 
     let node_modules_directory = node_modules_directories.local;
 
-    let dependencies_configs = if let Some(node_modules_directory) = node_modules_directory {
-        common::npm::get_node_modules_configs(&node_modules_directory)?
+    let dependencies_locks = if let Some(node_modules_directory) = node_modules_directory {
+        common::npm::get_node_modules_locks(&node_modules_directory)?
     } else {
         log::debug!("Failed to find `node_modules` directory.");
-        openfare_lib::package::DependenciesConfigs::new()
+        openfare_lib::package::DependenciesLocks::new()
     };
 
-    Ok(FsDefinedDependenciesConfigs {
+    Ok(FsDefinedDependenciesLocks {
         project_path: project_path.to_path_buf(),
-        package_configs: openfare_lib::package::PackageConfigs {
+        package_locks: openfare_lib::package::PackageLocks {
             primary_package: Some(primary_package),
-            primary_package_config: primary_package_config,
-            dependencies_configs,
+            primary_package_lock,
+            dependencies_locks,
         },
     })
 }

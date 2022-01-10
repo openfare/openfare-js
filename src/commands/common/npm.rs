@@ -52,14 +52,11 @@ use anyhow::{format_err, Context, Result};
 //     Ok(all_dependencies)
 // }
 
-/// Parse node module packages, return package OpenFare configs.
-pub fn get_node_modules_configs(
+/// Parse node module packages, return package OpenFare locks.
+pub fn get_node_modules_locks(
     node_modules_directory: &std::path::PathBuf,
 ) -> Result<
-    std::collections::BTreeMap<
-        openfare_lib::package::Package,
-        Option<openfare_lib::package::Config>,
-    >,
+    std::collections::BTreeMap<openfare_lib::package::Package, Option<openfare_lib::package::Lock>>,
 > {
     let results = std::fs::read_dir(node_modules_directory)?
         .filter_map(|package_directory| {
@@ -79,28 +76,28 @@ pub fn get_node_modules_configs(
                 Ok(k) => k,
                 Err(_) => return None,
             };
-            let config = match get_config(&package_directory) {
+            let lock = match get_lock(&package_directory) {
                 Ok(k) => k,
                 Err(_) => {
                     return Some((package, None));
                 }
             };
-            Some((package, config))
+            Some((package, lock))
         })
         .collect();
     Ok(results)
 }
 
-pub fn get_config(
+pub fn get_lock(
     package_directory: &std::path::PathBuf,
-) -> Result<Option<openfare_lib::package::Config>> {
-    let openfare_json_path = package_directory.join("OPENFARE.json");
-    let config = if openfare_json_path.is_file() {
+) -> Result<Option<openfare_lib::package::Lock>> {
+    let openfare_json_path = package_directory.join("OPENFARE.lock");
+    let lock = if openfare_json_path.is_file() {
         Some(parse_openfare_json(&openfare_json_path)?)
     } else {
         None
     };
-    Ok(config)
+    Ok(lock)
 }
 
 pub fn get_package(
@@ -129,10 +126,10 @@ pub fn get_package(
     Ok(openfare_lib::package::Package { name, version })
 }
 
-fn parse_openfare_json(path: &std::path::PathBuf) -> Result<openfare_lib::package::Config> {
+fn parse_openfare_json(path: &std::path::PathBuf) -> Result<openfare_lib::package::Lock> {
     let file = std::fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
-    let config: openfare_lib::package::Config = serde_json::from_reader(reader)
-        .context(format!("Failed to parse openfare.json: {}", path.display()))?;
-    Ok(config)
+    let lock: openfare_lib::package::Lock = serde_json::from_reader(reader)
+        .context(format!("Failed to parse OPENFARE.lock: {}", path.display()))?;
+    Ok(lock)
 }
