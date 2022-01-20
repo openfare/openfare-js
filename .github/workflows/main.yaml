@@ -52,13 +52,6 @@ jobs:
           fetch-depth: 1
           path: ${{ steps.meta.outputs.NAME }}
 
-      - name: Get openfare-lib
-        uses: actions/checkout@v2
-        with:
-          repository: 'openfare/openfare'
-          fetch-depth: 1
-          path: openfare
-
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
