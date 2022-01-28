@@ -284,7 +284,10 @@ pub fn get_package(
 fn parse_lock_file(path: &std::path::PathBuf) -> Result<openfare_lib::lock::Lock> {
     let file = std::fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
-    let lock: openfare_lib::lock::Lock = serde_json::from_reader(reader)
-        .context(format!("Failed to parse OPENFARE.lock: {}", path.display()))?;
+    let lock: openfare_lib::lock::Lock = serde_json::from_reader(reader).context(format!(
+        "Failed to parse {lock_file_name}: {path}",
+        lock_file_name = openfare_lib::lock::FILE_NAME,
+        path = path.display()
+    ))?;
     Ok(lock)
 }
