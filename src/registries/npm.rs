@@ -274,7 +274,11 @@ pub fn get_package(
             package_json_file.display()
         ))?
         .to_string();
-    Ok(openfare_lib::package::Package { name, version })
+    Ok(openfare_lib::package::Package {
+        registry: HOST_NAME.to_string(),
+        name,
+        version,
+    })
 }
 
 fn parse_lock_file(path: &std::path::PathBuf) -> Result<openfare_lib::lock::Lock> {
