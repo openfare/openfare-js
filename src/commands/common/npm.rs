@@ -91,9 +91,9 @@ pub fn get_node_modules_locks(
 pub fn get_lock(
     package_directory: &std::path::PathBuf,
 ) -> Result<Option<openfare_lib::lock::Lock>> {
-    let openfare_json_path = package_directory.join("OPENFARE.lock");
+    let openfare_json_path = package_directory.join(openfare_lib::lock::FILE_NAME);
     let lock = if openfare_json_path.is_file() {
-        Some(parse_openfare_json(&openfare_json_path)?)
+        Some(parse_lock_file(&openfare_json_path)?)
     } else {
         None
     };
@@ -126,7 +126,7 @@ pub fn get_package(
     Ok(openfare_lib::package::Package { name, version })
 }
 
-fn parse_openfare_json(path: &std::path::PathBuf) -> Result<openfare_lib::lock::Lock> {
+fn parse_lock_file(path: &std::path::PathBuf) -> Result<openfare_lib::lock::Lock> {
     let file = std::fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
     let lock: openfare_lib::lock::Lock = serde_json::from_reader(reader)
