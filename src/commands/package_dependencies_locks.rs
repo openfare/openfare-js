@@ -1,4 +1,3 @@
-use super::common;
 use anyhow::{format_err, Result};
 use openfare_lib::extension::Extension;
 
@@ -11,7 +10,7 @@ pub fn package_dependencies_locks(
 {
     let package_version = match package_version {
         Some(v) => Some(v.to_string()),
-        None => common::get_latest_version(&package_name)?,
+        None => crate::registries::npm::get_latest_version(&package_name)?,
     };
 
     let tmp_dir = tempdir::TempDir::new("openfare_js")?;
@@ -21,11 +20,13 @@ pub fn package_dependencies_locks(
 
     let primary_package_directory = tmp_dir.join("node_modules").join(package_name);
 
-    let package = common::npm::get_package(&primary_package_directory.join("package.json"))?;
-    let lock = common::npm::get_lock(&primary_package_directory)?;
+    let package =
+        crate::registries::npm::get_package(&primary_package_directory.join("package.json"))?;
+    let lock = crate::registries::npm::get_lock(&primary_package_directory)?;
 
     let node_modules_directory = tmp_dir.join("node_modules");
-    let mut dependencies_locks = common::npm::get_node_modules_locks(&node_modules_directory)?;
+    let mut dependencies_locks =
+        crate::registries::npm::get_node_modules_locks(&node_modules_directory)?;
     dependencies_locks.remove(&package);
 
     Ok(

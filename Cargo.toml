@@ -33,3 +33,6 @@ reqwest = { version = "0.10.6", features = ["blocking"] }
 handlebars = "3.1.0"
 serde = { version = "1.0.104", features = ["derive"] }
 serde_json = "1.0.48"
+
+[patch.crates-io]
+openfare-lib = { path = '../openfare/openfare-lib' }

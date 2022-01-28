@@ -1,4 +1,3 @@
-use super::common;
 use anyhow::{format_err, Result};
 use openfare_lib::extension::commands::fs_defined_dependencies_locks::FsDefinedDependenciesLocks;
 
@@ -7,13 +6,14 @@ pub fn fs_defined_dependencies_locks(
     _extension_args: &Vec<String>,
 ) -> Result<FsDefinedDependenciesLocks> {
     // Identify all dependency definition files.
-    let dependency_files = match common::identify_dependency_files(&working_directory) {
-        Some(v) => v,
-        None => {
-            log::debug!("Did not identify any dependency definition files.");
-            return Ok(FsDefinedDependenciesLocks::default());
-        }
-    };
+    let dependency_files =
+        match crate::registries::npm::identify_dependency_files(&working_directory) {
+            Some(v) => v,
+            None => {
+                log::debug!("Did not identify any dependency definition files.");
+                return Ok(FsDefinedDependenciesLocks::default());
+            }
+        };
     let dependency_file = match dependency_files.first() {
         Some(f) => f,
         None => {
@@ -36,10 +36,11 @@ pub fn fs_defined_dependencies_locks(
         ))?
         .to_path_buf();
 
-    let primary_package = common::npm::get_package(&dependency_file.path)?;
-    let primary_package_lock = common::npm::get_lock(&project_path)?;
+    let primary_package = crate::registries::npm::get_package(&dependency_file.path)?;
+    let primary_package_lock = crate::registries::npm::get_lock(&project_path)?;
 
-    let node_modules_directories = common::identify_node_modules_directories(&working_directory)?;
+    let node_modules_directories =
+        crate::registries::npm::identify_node_modules_directories(&working_directory)?;
 
     // if failed to find node modules directory, search again after running npm install.
     let node_modules_directories = if node_modules_directories.local.is_some() {
@@ -57,13 +58,13 @@ pub fn fs_defined_dependencies_locks(
             .current_dir(&project_path)
             .output()?;
 
-        common::identify_node_modules_directories(&working_directory)?
+        crate::registries::npm::identify_node_modules_directories(&working_directory)?
     };
 
     let node_modules_directory = node_modules_directories.local;
 
     let dependencies_locks = if let Some(node_modules_directory) = node_modules_directory {
-        common::npm::get_node_modules_locks(&node_modules_directory)?
+        crate::registries::npm::get_node_modules_locks(&node_modules_directory)?
     } else {
         log::debug!("Failed to find `node_modules` directory.");
         openfare_lib::package::DependenciesLocks::new()

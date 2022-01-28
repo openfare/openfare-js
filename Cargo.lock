@@ -849,8 +849,6 @@ dependencies = [
 [[package]]
 name = "openfare-lib"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd3d76fa880d3e25813245e226b52d1dec97fdfb5ef07ec6678ae824fa044235"
 dependencies = [
  "anyhow",
  "bincode",

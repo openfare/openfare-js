@@ -1,6 +1,7 @@
 use anyhow::Result;
 
 mod commands;
+mod registries;
 
 #[derive(Clone, Debug)]
 pub struct JsExtension {
@@ -12,7 +13,11 @@ impl openfare_lib::extension::FromLib for JsExtension {
     fn new() -> Self {
         Self {
             name_: "js".to_string(),
-            registry_host_names_: vec!["npmjs.com".to_owned()],
+            registry_host_names_: registries::HOST_NAMES
+                .to_vec()
+                .iter()
+                .map(|s| s.to_string())
+                .collect(),
         }
     }
 }
