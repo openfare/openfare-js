@@ -1,6 +1,6 @@
 [package]
 name = "openfare-js"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["rndhouse <rndhouse@protonmail.com>"]
 edition = "2021"
 repository = "https://github.com/openfare/openfare-js"
@@ -16,7 +16,7 @@ name = "openfare-js"
 path = "src/bin.rs"
 
 [dependencies]
-openfare-lib = "0.2.1"
+openfare-lib = "0.3.0"
 
 anyhow = "1.0.31"
 structopt = "0.3.14"
