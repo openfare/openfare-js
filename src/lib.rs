@@ -7,6 +7,7 @@ mod registries;
 pub struct JsExtension {
     name_: String,
     registry_host_names_: Vec<String>,
+    version_: String,
 }
 
 impl openfare_lib::extension::FromLib for JsExtension {
@@ -18,6 +19,11 @@ impl openfare_lib::extension::FromLib for JsExtension {
                 .iter()
                 .map(|s| s.to_string())
                 .collect(),
+            version_: format!(
+                "git-sha: {}, commit-timestamp: {}",
+                env!("VERGEN_GIT_SHA"),
+                env!("VERGEN_GIT_COMMIT_TIMESTAMP")
+            ),
         }
     }
 }
@@ -29,6 +35,10 @@ impl openfare_lib::extension::Extension for JsExtension {
 
     fn registries(&self) -> Vec<String> {
         self.registry_host_names_.clone()
+    }
+
+    fn version(&self) -> String {
+        self.version_.clone()
     }
 
     fn package_dependencies_locks(
