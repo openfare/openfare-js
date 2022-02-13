@@ -19,11 +19,7 @@ impl openfare_lib::extension::FromLib for JsExtension {
                 .iter()
                 .map(|s| s.to_string())
                 .collect(),
-            version_: format!(
-                "git-sha: {}, commit-timestamp: {}",
-                env!("VERGEN_GIT_SHA"),
-                env!("VERGEN_GIT_COMMIT_TIMESTAMP")
-            ),
+            version_: format!("CARGO_PKG_VERSION: {}", env!("CARGO_PKG_VERSION"),),
         }
     }
 }
