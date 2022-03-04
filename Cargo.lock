@@ -828,7 +828,7 @@ checksum = "2839e79665f131bdb5782e51f2c6c9599c133c6098982a54c794358bf432529c"
 
 [[package]]
 name = "openfare-js"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "anyhow",
  "env_logger",
@@ -848,9 +848,9 @@ dependencies = [
 
 [[package]]
 name = "openfare-lib"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88a5457460b883fac9b313ce1a06d6b1b2804c447d3bcf7a25855c40075b72cf"
+checksum = "27f4b601f9be6f4efa80c7e2c11650d1281cbd1410fd8805abb338e4daed1e0b"
 dependencies = [
  "anyhow",
  "bincode",
@@ -1234,9 +1234,9 @@ dependencies = [
 
 [[package]]
 name = "rust_decimal"
-version = "1.20.0"
+version = "1.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e0593ce4677e3800ddafb3de917e8397b1348e06e688128ade722d88fbe11ebf"
+checksum = "d37baa70cf8662d2ba1c1868c5983dda16ef32b105cce41fb5c47e72936a90b3"
 dependencies = [
  "arrayvec",
  "num-traits",
