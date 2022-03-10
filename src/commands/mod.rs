@@ -1,5 +1,5 @@
-mod fs_defined_dependencies_locks;
 mod package_dependencies_locks;
+mod project_dependencies_locks;
 
-pub use fs_defined_dependencies_locks::fs_defined_dependencies_locks;
 pub use package_dependencies_locks::package_dependencies_locks;
+pub use project_dependencies_locks::project_dependencies_locks;

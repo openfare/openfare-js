@@ -828,7 +828,7 @@ checksum = "2839e79665f131bdb5782e51f2c6c9599c133c6098982a54c794358bf432529c"
 
 [[package]]
 name = "openfare-js"
-version = "0.5.1"
+version = "0.6.0"
 dependencies = [
  "anyhow",
  "env_logger",
@@ -849,9 +849,9 @@ dependencies = [
 
 [[package]]
 name = "openfare-lib"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "27f4b601f9be6f4efa80c7e2c11650d1281cbd1410fd8805abb338e4daed1e0b"
+checksum = "f46fac9e85ea49c5d3a4f57ac5159e7be43ad1565e78ea0e740cc7dab7e7d14c"
 dependencies = [
  "anyhow",
  "bincode",
@@ -861,6 +861,7 @@ dependencies = [
  "lazy-regex",
  "lazy_static",
  "log",
+ "openssl-sys",
  "regex",
  "reqwest 0.11.7",
  "rust_decimal",
@@ -902,9 +903,9 @@ dependencies = [
 
 [[package]]
 name = "openssl-sys"
-version = "0.9.66"
+version = "0.9.72"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1996d2d305e561b70d1ee0c53f1542833f4e1ac6ce9a6708b6ff2738ca67dc82"
+checksum = "7e46109c383602735fa0a2e48dd2b7c892b048e1bf69e5c3b1d804b7d9c203cb"
 dependencies = [
  "autocfg",
  "cc",

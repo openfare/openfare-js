@@ -53,11 +53,13 @@ impl openfare_lib::extension::Extension for JsExtension {
         )
     }
 
-    fn fs_defined_dependencies_locks(
+    fn project_dependencies_locks(
         &self,
         working_directory: &std::path::PathBuf,
         extension_args: &Vec<String>,
-    ) -> Result<openfare_lib::extension::commands::fs_defined_dependencies_locks::FsDefinedDependenciesLocks>{
-        commands::fs_defined_dependencies_locks(&working_directory, &extension_args)
+    ) -> Result<
+        openfare_lib::extension::commands::project_dependencies_locks::ProjectDependenciesLocks,
+    > {
+        commands::project_dependencies_locks(&working_directory, &extension_args)
     }
 }

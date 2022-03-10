@@ -1,24 +1,24 @@
 use anyhow::{format_err, Result};
-use openfare_lib::extension::commands::fs_defined_dependencies_locks::FsDefinedDependenciesLocks;
+use openfare_lib::extension::commands::project_dependencies_locks::ProjectDependenciesLocks;
 
-pub fn fs_defined_dependencies_locks(
+pub fn project_dependencies_locks(
     working_directory: &std::path::PathBuf,
     _extension_args: &Vec<String>,
-) -> Result<FsDefinedDependenciesLocks> {
+) -> Result<ProjectDependenciesLocks> {
     // Identify all dependency definition files.
     let dependency_files =
         match crate::registries::npm::identify_dependency_files(&working_directory) {
             Some(v) => v,
             None => {
                 log::debug!("Did not identify any dependency definition files.");
-                return Ok(FsDefinedDependenciesLocks::default());
+                return Ok(ProjectDependenciesLocks::default());
             }
         };
     let dependency_file = match dependency_files.first() {
         Some(f) => f,
         None => {
             log::debug!("Did not identify any dependency definition files.");
-            return Ok(FsDefinedDependenciesLocks::default());
+            return Ok(ProjectDependenciesLocks::default());
         }
     };
 
@@ -70,7 +70,7 @@ pub fn fs_defined_dependencies_locks(
         openfare_lib::package::DependenciesLocks::new()
     };
 
-    Ok(FsDefinedDependenciesLocks {
+    Ok(ProjectDependenciesLocks {
         project_path: project_path.to_path_buf(),
         package_locks: openfare_lib::package::PackageLocks {
             primary_package: Some(primary_package),
