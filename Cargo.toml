@@ -3,6 +3,7 @@ name = "openfare-js"
 version = "0.6.1"
 authors = ["rndhouse <rndhouse@protonmail.com>"]
 edition = "2021"
+homepage = "https://openfare.dev"
 repository = "https://github.com/openfare/openfare-js"
 license-file = "LICENSE"
 description = "Javascript ecosystem extension for OpenFare."
